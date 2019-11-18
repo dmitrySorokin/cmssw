@@ -140,6 +140,8 @@ void ParametrisedEMPhysics::ConstructProcess() {
   bool gemHad = theParSet.getParameter<bool>("GflashEcalHad");
   bool ghadHad = theParSet.getParameter<bool>("GflashHcalHad");
 
+  bool lowEnergyParamEcal = theParSet.getParameter<bool>("LowEnergyParamEcal");
+
   G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
   if (gem || ghad || gemHad || ghadHad) {
     if (!m_tpmod) {
@@ -200,6 +202,11 @@ void ParametrisedEMPhysics::ConstructProcess() {
         }
       }
     }
+  }
+
+  if (lowEnergyParamEcal) {
+    edm::LogVerbatim("SimG4CoreApplication") << "ParametrisedEMPhysics: Low energy ECal parametrization for e-\n";
+    exit(0);
   }
 
   // Step limiters for e+-
